@@ -1,0 +1,22 @@
+Analise de desempenho
+
+Os testes foram feitos usando o script run.sh das versoes serial e concorrente. Na
+imagem small_sample.jpg, a versao serial executou em aproximadamente 1,126s. A
+versao concorrente executou em aproximadamente 0,701s com 2 threads, 0,460s com
+4 threads e 0,469s com 8 threads. O melhor resultado nessa imagem ocorreu com
+4 threads; com 8 threads o ganho deixou de aumentar, indicando que o overhead de
+criacao e escalonamento de threads ja passa a pesar para uma entrada menor.
+
+Na imagem jotinha_noise.jpg, a versao serial executou em aproximadamente
+8,462s. A versao concorrente executou em aproximadamente 4,892s com 2 threads,
+2,860s com 4 threads e 2,702s com 8 threads. Nesse caso, o aumento no tamanho
+da entrada tornou o paralelismo mais vantajoso, pois ha mais pixels para
+distribuir entre as threads. Ainda assim, o ganho de 4 para 8 threads foi bem
+menor que o ganho de 2 para 4 threads.
+
+O comportamento observado e esperado: aumentar o numero de threads reduz o tempo
+real enquanto existem nucleos disponiveis e trabalho suficiente para dividir.
+Depois de certo ponto, o ganho diminui por causa do overhead de criacao e
+sincronizacao das threads, maior pressao sobre memoria/cache e competicao pelos
+mesmos recursos do processador. O tempo user tambem tende a ficar maior que o
+tempo real na versao concorrente, porque varias threads usam CPU ao mesmo tempo.
